@@ -16,15 +16,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Leer las credenciales desde el archivo credentials.json
-    const credentialsPath = path.join(process.cwd(), "credentials.json");
-    const credentials = JSON.parse(await fs.readFile(credentialsPath, "utf-8"));
+    const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS);
 
-    // Configurar autenticación con Google Sheets API
-    const auth = new google.auth.GoogleAuth({
-      credentials,
-      scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
-    });
+const auth = new google.auth.GoogleAuth({
+  credentials,
+  scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
+});
+
 
     // Configurar cliente de Google Sheets
     const sheets = google.sheets({ version: "v4", auth });
